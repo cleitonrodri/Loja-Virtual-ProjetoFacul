@@ -4,11 +4,11 @@ const criarCarrinho = (req, res) => {
 
     const { usuario_id } = req.body;
 
-        db.query('INSERT INTO carrinhos (usuario_id) VALUES (?)', [usuario_id], (err, results) => {
+        db.query('INSERT INTO carrinhos (usuario_id) VALUES (?)', [usuario_id], (erro, results) => {
 
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Erro ao criar carrinho');
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao criar carrinho' + erro);
             }
 
             res.status(201).json({
@@ -25,11 +25,13 @@ const adicionarProdutoCarrinho = (req, res) => {
 
     db.query('INSERT INTO itens_carrinho (carrinho_id, produto_id, quantidade) VALUES (?, ?, ?)',
         [carrinho_id, produto_id, quantidade],
-        (err, results) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Erro ao adicionar produto no carrinho');
+        (erro, results) => {
+          
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao adicionar produto no carrinho' + erro);
             }
+          
             res.status(201).send('Produto adicionado ao carrinho');
         });
 };
@@ -44,11 +46,11 @@ const listarCarrinho = (req, res) => {
         JOIN produtos ON itens_carrinho.produto_id = produtos.id 
         WHERE itens_carrinho.carrinho_id = ?`, 
                 [carrinho_id], 
-                (err, results) => {
+                (erro, results) => {
 
-                    if(err) {
-                        console.error(err);
-                        return res.status(500).send('Erro ao buscar carrinho');
+                    if(erro) {
+                        console.error(erro);
+                        return res.status(500).send('Erro ao buscar carrinho' + erro);
                     }
                     res.json(results);
                 });

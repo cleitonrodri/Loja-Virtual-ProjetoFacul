@@ -10,9 +10,9 @@ const connection = mysql.createConnection({
 });
 
 // conectando ao banco, criado um if pra caso de algum erro aparecer o erro.
-connection.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar com o Banco de Dados:' + err);
+connection.connect((erro) => {
+    if (erro) {
+        console.error('Erro ao conectar com o Banco de Dados:' + erro);
         return;
     }
     console.log('Conectado ao MySQL 🚀');

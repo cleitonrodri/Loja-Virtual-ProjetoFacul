@@ -9,10 +9,10 @@ const listarProdutos = (req, res) => {
         JOIN marcas ON produtos.marca_id = marcas.id
     `;
 
-    db.query(sql, (err, results) => { 
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Erro no servidor');
+    db.query(sql, (erro, results) => { 
+        if (erro) {
+            console.error(erro);
+            return res.status(500).send('Erro no servidor' + erro);
         }
 
         // Retorna os dados como JSON
@@ -25,11 +25,11 @@ const buscarProdutoPorId = (req, res) => {
     const id = req.params.id; 
 
     // aqui ele busca no banco o produto com esse id
-    db.query('SELECT * FROM produtos WHERE id = ?', [id], (err, results) => { 
+    db.query('SELECT * FROM produtos WHERE id = ?', [id], (erro, results) => { 
         
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Erro no servidor');
+        if (erro) {
+            console.error(erro);
+            return res.status(500).send('Erro no servidor' + erro);
         }
 
         // se não encontrar nenhum produto com esse id
@@ -50,11 +50,11 @@ const criarProdutos = (req, res) => {
     db.query(
         'INSERT INTO produtos (nome, preco, descricao, categoria_id, marca_id) VALUES (?, ?, ?, ?, ?)',
         [nome, preco, descricao, categoria_id, marca_id], // substitui os ? pelos valores
-        (err, result) => {
+        (erro, result) => {
 
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Erro ao cadastrar produto');
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao cadastrar produto' + erro);
             }
 
             // se deu certo
@@ -99,11 +99,11 @@ const deletarProduto = (req, res) => {
     const id = req.params.id;
 
     // deleta no banco o produto com esse id
-    db.query('DELETE FROM produtos WHERE id = ?', [id], (err, results) => {
+    db.query('DELETE FROM produtos WHERE id = ?', [id], (erro, results) => {
       
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Erro no servidor');
+        if (erro) {
+            console.error(erro);
+            return res.status(500).send('Erro no servidor' + erro);
         }
 
         // se não deletou nada, significa que o id não existe

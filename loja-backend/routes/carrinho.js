@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router(); // cria um mini servidor e rotas
 
-const { criarCarrinho, adicionarProdutoCarrinho, listarCarrinho
+const { criarCarrinho,
+        adicionarProdutoCarrinho,
+        listarCarrinho
 } = require('../controllers/carrinhoController'); // importa o controler
 
 
