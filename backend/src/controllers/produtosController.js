@@ -75,11 +75,11 @@ const atualizarProduto = (req, res) => {
     db.query(
         'UPDATE produtos SET nome = ?, preco = ?, descricao = ?, categoria_id = ?, marca_id = ? WHERE id = ?',
         [nome, preco, descricao, categoria_id, marca_id, id],
-        (err, results) => {
+        (erro, results) => {
 
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Erro ao atualizar produto');
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao atualizar produto' + erro);
             }
 
             // se não atualizou nada, o id não existe

@@ -12,7 +12,7 @@ const { listarProdutos,
 router.get('/produtos', listarProdutos); // define uma rota
 router.get('/produtos/:id', buscarProdutoPorId);
 router.post('/produtos', criarProdutos);
-router.put('produtos/:id', atualizarProduto);
-router.delete('produtos/:id', deletarProduto);
+router.put('/produtos/:id', atualizarProduto);
+router.delete('/produtos/:id', deletarProduto);
 
 module.exports = router;
