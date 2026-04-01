@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Virtual</title>
+</head>
+<body> 
+    
+<h1>🛒 Produtos</h1> <!--Titulo da página--> 
+
+<button onclick="carregarProdutos()">Carregar Produtos</button> <!--Botão que chama uma função Js--> 
+
+<ul id='lista'></ul> <!--Lista onde os produtos vão aparecer--> 
+
+<script> // inicio do Js
+    async function carregarProdutos() { // cria uma função permite usa o await pra esperar resposta da api
+        const resposta = await fetch('http://localhost:3000/produtos'); // chamando o backend
+        const produtos = await resposta.json(); // transformando em objeto JS
+        
+        const lista = document.getElementById('lista'); // pega a lista do html acima 
+        lista.innerHTML = ''; // limpa antes de adicionaar novo item
+
+        produtos.forEach(p => { // percorre cada produto loop "p" = produto atual
+            lista.innerHTML += `<li>${p.nome} - R$ ${p.preco}</li>`; // adiciona um item na lista pega o nome e preço
+        }) 
+    }
+</script>
+
+<h5>Crie abaixo um produto</h5>
+<input id="nome" placeholder="Nome">
+<input id="preco" placeholder="Preço">
+<button onclick="criar()">Criar Produto</button>
+
+<script>
+    async function criar() { // cria uma enviar dados
+        const nome = document.getElementById('nome').value; // pega o valor digitado no input
+        const preco = document.getElementById('preco').value;
+
+        const resposta = await fetch('http://localhost:3000/produtos', { // chama api dnv
+            method: 'POST', // tipo de requisicao
+            headers: { 'Content-type': 'application/json' }, // enviando JSON
+            body: JSON.stringify({ nome: nome, preco: preco }) // transforma em JSON
+    });
+
+    if (resposta.ok) {
+        alert("Produto criado com sucesso!");
+        carregarProdutos(); // Atualiza a lista automaticamente
+    } else {
+        alert("Erro ao cadastrar produto.")
+    }
+}
+</script>
+
+</body>
+</html>

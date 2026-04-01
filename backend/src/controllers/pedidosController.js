@@ -89,8 +89,54 @@ const listarPedidos = (req, res) => {
         });
 };
 
+const buscarPedidoCompleto = (req,res) => {
+    const pedido_id = req.params.id;
+
+    db.query(`SELECT
+                pedidos.id,
+                usuarios.nome  AS  usuario,
+                pedidos.total,
+                pedidos.data
+            FROM pedidos
+            JOIN usuarios ON pedidos.usuario_id = usuarios.id
+            WHERE pedidos.id = ?`,
+         [pedido_id], 
+         (erro, pedidoResult) => {
+            if(erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao buscar pedido');            
+            }
+            if (pedidoResult.length === 0) {
+                return res.status(404).send('Pedido não encontrado');
+            }
+
+            db.query(`SELECT
+                        produtos.nome AS produto,
+                        itens_pedido.quantidade,
+                        itens_pedido.preco
+                    FROM itens_pedido
+                    JOIN produtos  ON itens_pedido.produto_id = produtos.id
+                    WHERE itens_pedido.pedido_id = ?`, 
+                    [pedido_id],
+                    (erro, itensResult) => {
+
+                    if(erro) {
+                        console.error(erro);
+                        return res.status(500).send('Erro ao buscar  itens');
+                    }
+
+                    const pedido = {
+                        ...pedidoResult[0],
+                        itens: itensResult
+                    };
+                    res.json(pedido);
+                });
+         });
+};
+
 module.exports = {
     criarPedido,
     adicionarItemPedido,
-    listarPedidos
+    listarPedidos,
+    buscarPedidoCompleto
 };

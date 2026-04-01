@@ -1,13 +1,28 @@
 const db = require('../db');
 
+
+const criarProdutos = (req, res) => {
+    
+    const { nome, preco, descricao } = req.body; 
+    
+    db.query(
+        'INSERT INTO produtos (nome, preco, descricao) VALUES (?, ?, ?)',
+        [nome, preco, descricao], // substitui os ? pelos valores
+        (erro, result) => {
+
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao cadastrar produto' + erro);
+            }
+
+            // se deu certo
+            res.status(201).send('Produto cadastrado com sucesso');
+        }
+);
+}; 
+
 const listarProdutos = (req, res) => {
-    const sql = `
-        SELECT produtos.id, produtos.nome, produtos.preco, 
-               categorias.nome AS categoria, marcas.nome AS marca 
-        FROM produtos 
-        JOIN categorias ON produtos.categoria_id = categorias.id 
-        JOIN marcas ON produtos.marca_id = marcas.id
-    `;
+    const sql = 'SELECT * FROM produtos';
 
     db.query(sql, (erro, results) => { 
         if (erro) {
@@ -43,38 +58,18 @@ const buscarProdutoPorId = (req, res) => {
 
 };
 
-const criarProdutos = (req, res) => {
-    
-    const { nome, preco, descricao, categoria_id, marca_id } = req.body; 
-    
-    db.query(
-        'INSERT INTO produtos (nome, preco, descricao, categoria_id, marca_id) VALUES (?, ?, ?, ?, ?)',
-        [nome, preco, descricao, categoria_id, marca_id], // substitui os ? pelos valores
-        (erro, result) => {
-
-            if (erro) {
-                console.error(erro);
-                return res.status(500).send('Erro ao cadastrar produto' + erro);
-            }
-
-            // se deu certo
-            res.status(201).send('Produto cadastrado com sucesso');
-        }
-);
-}; 
-
 const atualizarProduto = (req, res) => {
 
     // pega o id da URL
     const id = req.params.id;
 
     // pega os dados novos enviados
-    const { nome, preco, descricao, categoria_id, marca_id } = req.body;
+    const { nome, preco, descricao } = req.body;
 
     // atualiza no banco
     db.query(
-        'UPDATE produtos SET nome = ?, preco = ?, descricao = ?, categoria_id = ?, marca_id = ? WHERE id = ?',
-        [nome, preco, descricao, categoria_id, marca_id, id],
+        'UPDATE produtos SET nome = ?, preco = ?, descricao = ? WHERE id = ?',
+        [nome, preco, descricao, id],
         (erro, results) => {
 
             if (erro) {
@@ -117,9 +112,9 @@ const deletarProduto = (req, res) => {
 };
 
 module.exports = {
+    criarProdutos,
     listarProdutos,
     buscarProdutoPorId, 
-    criarProdutos,
     atualizarProduto,
     deletarProduto
     };
