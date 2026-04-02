@@ -6,7 +6,8 @@
     <title>Loja Virtual</title>
 </head>
 <body> 
-    
+<div>
+
 <h1>🛒 Produtos</h1> <!--Titulo da página--> 
 
 <button onclick="carregarProdutos()">Carregar Produtos</button> <!--Botão que chama uma função Js--> 
@@ -27,7 +28,11 @@
     }
 </script>
 
-<h5>Crie abaixo um produto</h5>
+</div>
+
+<div>
+
+<h1>Crie abaixo um produto</h1>
 <input id="nome" placeholder="Nome">
 <input id="preco" placeholder="Preço">
 <button onclick="criar()">Criar Produto</button>
@@ -51,6 +56,48 @@
     }
 }
 </script>
+
+</div>
+
+<div>
+
+    <h1>📦 Buscar Pedido</h1>
+
+    <input id="pedidoId" placeholder="Digite o ID do pedido">
+    <button onclick="buscarPedido()">Buscar Pedido</button>
+    <div id="pedido"></div>
+
+<script>
+    async function buscarPedido() {
+        const id = document.getElementById('pedidoId').value; // pega o Id
+
+        const resposta = await fetch(`http://localhost:3000/pedidos/${id}`); // chama a api
+        const pedido = await resposta.json();
+
+        console.log(pedido);
+        
+        const div = document.getElementById('pedido');
+
+        //monta o HTML
+        div.innerHTML = `
+            <h3>Pedido #${pedido.id}</h3>
+            <p>Usuário: ${pedido.usuario}</p>
+            <p>Total: R$ ${pedido.total}</p>
+        
+            <h4>Itens:</h4>
+            <ul>
+             ${pedido.itens.map(item => `
+                <li>
+                    ${item.produto} -
+                    Qtd: ${item.quantidade} -
+                    R$ ${item.preco}
+                </li>
+             `).join('')}
+            </ul>
+        `;
+    }
+</script>
+</div>
 
 </body>
 </html>
