@@ -99,5 +99,52 @@
 </script>
 </div>
 
+<div>
+
+    <script>
+        
+        let usuarioLogado = null;
+        
+        async function login() {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            const resposta = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringfy({email, senha})
+            });
+
+            const dados = await resposta.json();
+
+            usuarioLogado = dados;
+        };
+        if (usuarioLogado.tipo === 'admin') {
+            document.getElementById('adminArea').style.display = 'block';
+        } else {
+            document.getElementById('clienteArea').style.display = 'block';
+        }
+
+    </script>
+
+    <div id="adminArea" style="display:none;">
+        <h2>Área do Admin</h2>
+        <button onclick="criarProduto()">Criar Produto</button>
+    </div>
+
+    <div id="clienteArea" style="display:none;">
+        <h2>Área do Cliente</h2>
+        <button onclick="carregarProdutos()">Ver Produtos</button>
+    </div>
+
+    <script>
+
+        if (req.body.tipo !== 'admin') {
+            return res.status(403).send('Apenas admin');
+        }
+    </script>
+</div>
+
+
 </body>
 </html>

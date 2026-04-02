@@ -79,10 +79,33 @@ const deletarUsuario = (req, res) => {
         });
 }
 
+const login = (req, res) => {
+
+    const {email, senha} = req.body;
+
+    db.query('SELECT * FROM usuarios WHERE email = ? AND senha = ?', 
+        [email, senha],
+        (erro, results) => {
+           
+            if (results.length === 0) {
+                return res.status(401).send('Usuário ou senha inválidos');
+            }
+
+            const usuario = results[0];
+
+            res.json({
+                id: usuario.id,
+                nome: usuario.nome,
+                tipo: usuario.tipo
+            });
+        });
+};
+
 module.exports = {
     criarUsuario,
     listarUsuarios,
     buscarUsuariosPorId,
     atualizarUsuario,
-    deletarUsuario
+    deletarUsuario,
+    login
 };
