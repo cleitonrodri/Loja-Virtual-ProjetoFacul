@@ -67,7 +67,7 @@ const atualizarUsuario = (req, res) => {
 const deletarUsuario = (req, res) => {
     const id = req.params.id;
 
-    db.query('DELETE FROM usuarios WHERE id = ?'
+    db.query('DELETE FROM usuarios WHERE id = ?',
         [id],
         (erro, result) => {
 
