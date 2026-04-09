@@ -1,183 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja Virtual</title>
-</head>
-<body> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - Loja de Periféricos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
 
-<!--LOGIN-->
-<h1>🔐 Login </h1>
-<input id="email" placeholder="Email">
-<input  type="password" id="senha" placeholder="Senha">
-<button onclick="login()">Entrar</button>
-<button onclick="logout()">Sair</button>
+  <body>
+    <header class="cabecalho-principal">
+      <div class="container-cabecalho">
+        <h1 class="logo-loja">Loja de Periféricos</h1>
 
-<hr>
+        <nav class="menu-navegacao">
+          <a href="index.html" class="link-menu">Home</a>
 
-<!--ADMIN-->
-<div id="adminArea" style="display:none;">
-    <h2>Área do Admin</h2>
+          <a href="vitrine.html?categoria=teclado" class="link-menu">Teclados</a>
+          <a href="vitrine.html?categoria=mouse" class="link-menu">Mouses</a>
+          <a href="vitrine.html?categoria=monitor" class="link-menu">Monitores</a>
+          <a href="vitrine.html?categoria=headset" class="link-menu">Headsets</a>
+          <a href="vitrine.html?categoria=placa-mae" class="link-menu">Placas-Mãe</a>
+          <a href="vitrine.html?categoria=placa-video" class="link-menu">Placas de Vídeo</a>
+        </nav>
 
-    <h3> Criar Produto</h3>
-    <input id="nome" placeholder="Nome">
-    <input id="preco" placeholder="Preco">
-    <button onclick="criarProduto()">Criar Produto</button>
-</div>
+        <div class="acoes-usuario">
+          <a href="carrinho.html" class="btn-carrinho">🛒 Carrinho</a>
+          <a href="signin.html" id="linkSignin" class="btn-signin">🔐 Entrar</a>
+          <a href="signup.html" id="linkSignup" class="btn-signup">🔐 Cadastrar</a>
 
-<!--CLIENTE-->
-<div id="clienteArea" style="display:none;">
-    <h2>Área do Cliente</h2>
-    <button onclick="carregarProdutos()">Ver Produtos</button>
-</div>
+          <button
+            id="btnSair"
+            class="btn-sair"
+            style="display: none"
+            onclick="fazerLogout()"
+          >
+            Sair
+          </button>
+        </div>
+      </div>
+    </header>
 
-<hr>
+    <hr />
+    <main class="container-principal">
+      <section class="banner-destaque">
+        <h2 class="titulo-banner">Monte o seu Setup Gamer!</h2>
+        <p class="texto-banner">As melhores peças com os melhores preços.</p>
+      </section>
+    </main>
 
-<!--PRODUTOS-->
-<h2>🛒 Produtos</h2>
-<ul id="lista"></ul>
-
-<!--Pedidos-->
-<h2> Buscar Pedido</h2>
-<input id="pedidoId" placeholder="Digite o ID do pedido">
-<button onclick="buscarPedido()">Buscar Pedido</button>
-<div id="pedido"></div>
-
-<script>
-
-let usuarioLogado = null;
-
-//LOGIN        
-async function login() {
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-            
-    const resposta = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({email, senha})
-    });
-
-    if (resposta.ok) {
-        const dados = await resposta.json(); // Aqui o JSON vem certinho
-        usuarioLogado = dados;
-        localStorage.setItem('usuario', JSON.stringify(dados));
-        mostrarTela();
-        alert("Login realizado!");
-    } else {
-        // 2. Se deu erro (401), lê como TEXTO para não quebrar o JS
-        const mensagemErro = await resposta.text();
-        alert("Erro: " + mensagemErro);
-    }
-}
-
-//LOGOUT
- function logout() {
-    localStorage.removeItem('usuario');
-    usuarioLogado = null;
-    location.reload();
-}
-
-//CONTROLE DE TELA
-function  mostrarTela() {
-         
-    document.getElementById('adminArea').style.display = 'none';
-    document.getElementById('clienteArea').style.display = 'none';
-
-    if (!usuarioLogado) return;
-
-    if (usuarioLogado.tipo === 'admin') {
-        document.getElementById('adminArea').style.display = 'block';
-    } else {
-        document.getElementById('clienteArea').style.display = 'block';
-    }
-}
-
-//AO ABRIR
- window.onload = () => {
-
-    const usuarioSalvo = localStorage.getItem('usuario');
-
-    if  (usuarioSalvo && usuarioSalvo !== "undefined") {
-        try {
-        usuarioLogado = JSON.parse(usuarioSalvo);
-        mostrarTela();
-        }catch (e) {
-            console.error("Erro ao ler usuário do localStorage", e);
-            localStorage.removeItem('usuario');
-        }
-    }
-};
-
-//LISTAR PRODUTOS
-async function carregarProdutos() { // cria uma função permite usa o await pra esperar resposta da api
-    
-    const resposta = await fetch('http://localhost:3000/produtos'); // chamando o backend
-    const produtos = await resposta.json(); // transformando em objeto JS
-        
-    const lista = document.getElementById('lista'); // pega a lista do html acima 
-    lista.innerHTML = ''; // limpa antes de adicionaar novo item
-
-    produtos.forEach(p => { // percorre cada produto loop "p" = produto atual
-        lista.innerHTML += `<li>${p.nome} - R$ ${p.preco}</li>`; // adiciona um item na lista pega o nome e preço
-    }); 
-}
-
-//CRIAR PRODUTO
-async function criarProduto() { // cria uma enviar dados
-       
-    if (!usuarioLogado || usuarioLogado.tipo !== 'admin') {
-        alert('Apenas admin pode criar produto')
-        return;
-    }
-       
-    const nome = document.getElementById('nome').value; // pega o valor digitado no input
-    const preco = document.getElementById('preco').value;
-
-    const resposta = await fetch('http://localhost:3000/produtos', { // chama api dnv
-        method: 'POST', // tipo de requisicao
-        headers: { 'Content-type': 'application/json' }, // enviando JSON
-        body: JSON.stringify({nome, preco, tipo: usuarioLogado.tipo }) // transforma em JSON
-    });
-
-    if (resposta.ok) {
-        alert("Produto criado com sucesso!");
-        carregarProdutos(); // Atualiza a lista automaticamente
-    } else {
-        alert("Erro ao cadastrar produto.")
-    }
-}
-
-//BUSCAR PEDIDO
-async function buscarPedido() {
-        
-    const id = document.getElementById('pedidoId').value; // pega o Id
-
-    const resposta = await fetch(`http://localhost:3000/pedidos/${id}`); // chama a api
-    const pedido = await resposta.json();
-        
-    const div = document.getElementById('pedido');
-
-        //monta o HTML
-    div.innerHTML = `
-        <h3>Pedido #${pedido.id}</h3>
-        <p>Usuário: ${pedido.usuario}</p>
-        <p>Total: R$ ${pedido.total}</p>
-        
-        <ul>
-            ${pedido.itens.map(item => `
-                <li>
-                    ${item.produto} -
-                    Qtd: ${item.quantidade} -
-                    R$ ${item.preco}
-                </li>
-             `).join('')}
-        </ul>
-        `;
-}
-
-</script>
-
-</body>
+    <script src="./js/index.js"></script>
+  </body>
 </html>

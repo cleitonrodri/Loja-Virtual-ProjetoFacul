@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIGN - UP</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container-principal">
+      <form id="formSignup">
+        <h3>Criar minha conta</h3>
+        <p>Informe os seus dados abaixo para criar sua conta</p>
+        <input
+          type="text"
+          id="nomeSignup"
+          placeholder="Seu Nome Completo"
+          required
+        />
+        <input
+          type="email"
+          id="emailSignup"
+          placeholder="Seu E-mail"
+          required
+        />
+        <input
+          type="password"
+          id="senhaSignup"
+          placeholder="Crie uma Senha"
+          required
+          minlength="6"
+        />
+
+        <button type="submit">Criar Conta</button>
+
+        <p>Já tem conta? <a href="signin.html">Faça o Login</a></p>
+      </form>
+    </main>
+
+    <script src="js/signup.js"></script>
+  </body>
+</html>

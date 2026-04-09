@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Painel do Chefe - Loja de Periféricos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="cabecalho-principal">
+      <h1 class="logo-loja">Painel Administrativo</h1>
+      <nav class="menu-navegacao">
+        <a href="index.html" class="link-menu">⬅ Voltar para a Loja</a>
+      </nav>
+    </header>
+
+    <main class="container-principal">
+      <h2>Adicionar Novo Produto</h2>
+
+      <div
+        class="formulario-admin"
+        style="
+          display: flex;
+          flex-direction: column;
+          max-width: 300px;
+          gap: 10px;
+        "
+      >
+        <input
+          type="text"
+          id="nomeProduto"
+          placeholder="Nome (Ex: Mouse Gamer)"
+        />
+        <input
+          type="number"
+          id="precoProduto"
+          placeholder="Preço (Ex: 150.00)"
+        />
+        <input type="text" id="descProduto" placeholder="Descrição rápida" />
+
+        <label for="categoriaProduto">Categoria do Produto:</label>
+        <select
+          id="categoriaProduto"
+          onchange="verificarNovaCategoria()"
+          required
+        >
+          <option value="" disabled selected>Selecione uma categoria...</option>
+          <option value="teclado">Teclados</option>
+          <option value="mouse">Mouses</option>
+          <option value="monitor">Monitores</option>
+          <option value="placa-mae">Placas-Mãe</option>
+          <option value="placa-video">Placas de Vídeo</option>
+          <option value="nova_categoria">➕ Criar Nova Categoria...</option>
+        </select>
+
+        <input
+          type="text"
+          id="inputNovaCategoria"
+          placeholder="Digite o nome da nova categoria"
+          style="display: none"
+        />
+        <input
+          type="text"
+          id="marcaProduto"
+          placeholder="Marca (Ex: Logitech, Redragon)"
+        />
+        <input
+          type="number"
+          id="estoqueProduto"
+          placeholder="Quantidade no Estoque"
+        />
+        <button
+          onclick="cadastrarProduto()"
+          style="background-color: darkred; color: white; padding: 10px"
+        >
+          Salvar no Banco de Dados
+        </button>
+      </div>
+    </main>
+
+    <script src="./js/admin.js"></script>
+  </body>
+</html>

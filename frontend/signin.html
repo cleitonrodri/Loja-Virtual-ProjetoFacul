@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIGN - IN</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container-principal">
+      <form
+        id="formSignin"
+        style="
+          max-width: 300px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        "
+      >
+        <h2>Acesse sua conta</h2>
+        <input
+          type="email"
+          id="emailSignin"
+          placeholder="Digite seu e-mail"
+          required
+        />
+        <input
+          type="password"
+          id="senhaSignin"
+          placeholder="Digite sua senha"
+          required
+        />
+
+        <button type="submit">Entrar</button>
+
+        <p>Não tem conta? <a href="signup.html">Cadastre-se aqui</a></p>
+      </form>
+    </main>
+
+    <script src="js/signin.js"></script>
+  </body>
+</html>

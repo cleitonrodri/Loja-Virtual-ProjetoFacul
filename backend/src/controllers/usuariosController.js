@@ -1,33 +1,33 @@
 const db = require('../db');
 
 const criarUsuario = (req, res) => {
-   const { nome, email, senha } = req.body;
+    const { nome, email, senha } = req.body;
 
-   db.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?,?)',
-    [nome, email, senha],
-    (erro, result) => {
+    db.query('INSERT INTO usuarios (nome, email, senha) VALUES (?, ?,?)',
+        [nome, email, senha],
+        (erro, result) => {
 
-        if (erro) {
-            console.error(erro);
-         return res.status(500).send('Erro ao criar Usuario' + erro);
-        }
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao criar Usuario' + erro);
+            }
 
-        res.status(201).send('Usuario criado com sucesso');
-    });
+            res.status(201).send('Usuario criado com sucesso');
+        });
 }
 
-const listarUsuarios =  (req, res) => {
+const listarUsuarios = (req, res) => {
 
     db.query('SELECT id, nome, email FROM usuarios',
-       (erro, results) => {
+        (erro, results) => {
 
-        if (erro) {
-            console.error(erro);
-            return res.status(500).send('Erro ao buscar os Usuarios');
-        }
+            if (erro) {
+                console.error(erro);
+                return res.status(500).send('Erro ao buscar os Usuarios');
+            }
 
-        res.json(results);
-       });
+            res.json(results);
+        });
 };
 
 const buscarUsuariosPorId = (req, res) => {
@@ -81,12 +81,12 @@ const deletarUsuario = (req, res) => {
 
 const login = (req, res) => {
 
-    const {email, senha} = req.body;
+    const { email, senha } = req.body;
 
-    db.query('SELECT * FROM usuarios WHERE email = ? AND senha = ?', 
+    db.query('SELECT * FROM usuarios WHERE email = ? AND senha = ?',
         [email, senha],
         (erro, results) => {
-           
+
             if (results.length === 0) {
                 return res.status(401).send('Usuário ou senha inválidos');
             }

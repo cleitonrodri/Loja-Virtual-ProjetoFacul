@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Catálogo - Loja de Periféricos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="cabecalho-principal">
+      <h1 class="logo-loja">Loja de Periféricos</h1>
+      <nav class="menu-navegacao">
+        <a href="index.html" class="link-menu">Home</a>
+        <a href="vitrine.html?categoria=teclado" class="link-menu">Teclados</a>
+        <a href="vitrine.html?categoria=mouse" class="link-menu">Mouses</a>
+        <a href="vitrine.html?categoria=placa-mae" class="link-menu"
+          >Placas-Mãe</a
+        >
+        <a href="carrinho.html" class="link-menu">🛒 Carrinho</a>
+      </nav>
+    </header>
+
+    <main class="container-principal">
+      <h2 id="tituloVitrine">Todos os Produtos</h2>
+
+      <div
+        id="gradeProdutos"
+        class="grid-produtos"
+        style="display: flex; flex-wrap: wrap; gap: 20px"
+      ></div>
+    </main>
+
+    <script src="./js/vitrine.js"></script>
+  </body>
+</html>

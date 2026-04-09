@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meu Carrinho - Loja de Periféricos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="cabecalho-principal">
+      <h1 class="logo-loja">Loja de Periféricos</h1>
+      <nav class="menu-navegacao">
+        <a href="index.html" class="link-menu">Home</a>
+        <a href="vitrine.html?categoria=teclado" class="link-menu">Teclados</a>
+        <a href="vitrine.html?categoria=mouse" class="link-menu">Mouses</a>
+        <a href="vitrine.html?categoria=placa-mae" class="link-menu"
+          >Placas-Mãe</a
+        >
+      </nav>
+    </header>
+
+    <main class="container-principal">
+      <h2>🛒 Seu Carrinho de Compras</h2>
+
+      <div
+        id="listaCarrinho"
+        style="
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        "
+      ></div>
+
+      <hr style="margin: 20px 0" />
+
+      <h3 id="valorTotal" style="text-align: right; color: green">
+        Total: R$ 0.00
+      </h3>
+
+      <div style="text-align: right; margin-top: 20px">
+        <button
+          onclick="finalizarCompra()"
+          style="
+            background-color: darkgreen;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+          "
+        >
+          💳 Finalizar Compra
+        </button>
+      </div>
+    </main>
+
+    <script src="./js/carrinho.js"></script>
+  </body>
+</html>
