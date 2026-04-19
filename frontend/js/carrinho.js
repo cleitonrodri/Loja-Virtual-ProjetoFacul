@@ -57,32 +57,57 @@ function removerDoCarrinho(posicaoDoItem) {
 }
 
 // Função do Botão Finalizar Compra
-function finalizarCompra() {
+async function finalizarCompra() {
   const usuarioSalvo = localStorage.getItem("usuario");
   const carrinhoSalvo = localStorage.getItem("carrinho");
   const carrinhoDeCompras = carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
 
-  // Segurança 1: Tem coisa na mochila?
+  // Segurança 1: Carrinho vazio
   if (carrinhoDeCompras.length === 0) {
     alert("Coloque produtos no carrinho antes de tentar pagar!");
     return;
   }
 
-  // Segurança 2: O cara está logado? (Se não, manda pra tela de login)
+  // Segurança 2: Usuário não logado
   if (!usuarioSalvo || usuarioSalvo === "undefined") {
     alert("Você precisa entrar na sua conta para finalizar a compra.");
-    window.location.href = "signin.html";
+    window.location.replace("signin.html");
     return;
   }
 
-  // Se passou pela segurança, festa! 🎉
-  alert(
-    "Pagamento aprovado! Seu pedido está sendo preparado. Parabéns pelo novo setup!",
-  );
+  // Pega os dados do usuário para saber quem está comprando
+  const usuarioLogado = JSON.parse(usuarioSalvo);
 
-  // Esvazia a mochila depois de pagar
-  localStorage.removeItem("carrinho");
+  // Calcula o valor total da compra
+  let somaTotal = 0;
+  carrinhoDeCompras.forEach((produto) => {
+    somaTotal += parseFloat(produto.preco);
+  });
 
-  // Manda ele de volta pra Home
-  window.location.href = "index.html";
+  // O Garçom (Fetch) leva o pedido para o Backend
+  try {
+    const resposta = await fetch("http://localhost:3000/pedidos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        usuario_id: usuarioLogado.id, // ID de quem comprou
+        total: somaTotal, // Valor da compra
+      }),
+    });
+
+    if (resposta.ok) {
+      alert("Pagamento aprovado! Seu pedido já está no nosso sistema.");
+
+      // Limpa a mochila do cliente
+      localStorage.removeItem("carrinho");
+
+      // Manda o cliente de volta pra loja
+      window.location.href = "index.html";
+    } else {
+      alert("Ops! Tivemos um problema ao processar seu pedido no servidor.");
+    }
+  } catch (erro) {
+    console.error("Erro de conexão:", erro);
+    alert("Erro ao conectar com o sistema de vendas.");
+  }
 }

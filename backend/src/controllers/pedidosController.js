@@ -1,22 +1,22 @@
 const db = require("../db");
 
 const criarPedido = (req, res) => {
-  const { usuario_id } = req.body;
+  const { usuario_id, total } = req.body;
 
   db.query(
-    "INSERT INTO pedidos (usuario_id) VALUES (?)",
-    [usuario_id],
+    // O NOW() diz para o MySQL salvar a data e hora exata de agora
+    "INSERT INTO pedidos (usuario_id, total, data) VALUES (?, ?, NOW())",
+    [usuario_id, total],
     (erro, results) => {
       if (erro) {
         console.error(erro);
         return res.status(500).send("Erro ao criar pedido" + erro);
       }
 
-      // Retorna os dados como JSON
-      res.json({
-        mensagem: "Pedido criado",
-        pedido_id: results.insertId,
-      });
+      // Responde com sucesso e devolve o ID do pedido gerado
+      res
+        .status(201)
+        .json({ mensagem: "Pedido realizado!", id: results.insertId });
     },
   ); // Fechamento correto do db.query
 };
