@@ -17,7 +17,7 @@ document
     if (resposta.status === 201) {
       alert("Conta criada com sucesso! Faça seu login.");
 
-      // Como agora são páginas separadas, a gente joga o usuario pra página de login
+      // joga o usuario pra página de login
       window.location.href = "signin.html";
     } else {
       alert("Erro ao criar conta. Esse e-mail já pode estar em uso.");

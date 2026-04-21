@@ -2,7 +2,7 @@ window.onload = () => {
   renderizarCarrinho();
 };
 
-// Função que desenha a tela e calcula o total
+// 1. FUNÇÃO QUE DESENHA A TELA E CALCULA O TOTAL
 function renderizarCarrinho() {
   const carrinhoSalvo = localStorage.getItem("carrinho");
   const carrinhoDeCompras = carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
@@ -12,7 +12,7 @@ function renderizarCarrinho() {
   // Se o carrinho estiver vazio
   if (carrinhoDeCompras.length === 0) {
     divLista.innerHTML =
-      "<p>Sua mochila está vazia! Vá até a vitrine e escolha seus hardwares.</p>";
+      "<p class='msg-vazio'>Sua mochila está vazia! Vá até a vitrine e escolha seus hardwares.</p>";
     elementoTotal.innerText = "Total: R$ 0.00";
     return;
   }
@@ -23,17 +23,17 @@ function renderizarCarrinho() {
   // Passa por cada produto na mochila
   carrinhoDeCompras.forEach((produto, index) => {
     htmlItens += `
-            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h4 style="margin: 0;">${produto.nome}</h4>
-                    <p style="margin: 5px 0 0 0; color: gray;">R$ ${produto.preco}</p>
+            <div class="item-carrinho">
+                <div class="info-item">
+                    <h4>${produto.nome}</h4>
+                    <p class="preco-item">R$ ${produto.preco}</p>
                 </div>
-                <button onclick="removerDoCarrinho(${index})" style="background-color: #ff4c4c; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px;">
-                    🗑️ Remover
+                <button class="btn-remover" onclick="removerDoCarrinho(${index})">
+                  🗑️ Remover
                 </button>
             </div>
-        `;
-    // Transforma o texto do preço em número e soma
+    `;
+    // Transforma o texto do preço em número decimal e soma
     somaTotal += parseFloat(produto.preco);
   });
 
@@ -42,7 +42,7 @@ function renderizarCarrinho() {
   elementoTotal.innerText = `Total: R$ ${somaTotal.toFixed(2)}`;
 }
 
-// Função para tirar um item específico da mochila
+// 2. FUNÇÃO PARA TIRAR UM ITEM ESPECÍFICO DA MOCHILA
 function removerDoCarrinho(posicaoDoItem) {
   let carrinhoDeCompras = JSON.parse(localStorage.getItem("carrinho"));
 
@@ -56,7 +56,7 @@ function removerDoCarrinho(posicaoDoItem) {
   renderizarCarrinho();
 }
 
-// Função do Botão Finalizar Compra
+// 3. FUNÇÃO DO BOTÃO FINALIZAR COMPRA
 async function finalizarCompra() {
   const usuarioSalvo = localStorage.getItem("usuario");
   const carrinhoSalvo = localStorage.getItem("carrinho");

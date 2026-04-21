@@ -1,24 +1,28 @@
-// O "Ouvinte" que roda quando a página da Home abre
+// O "Ouvinte" que roda quando a página abre
 window.onload = () => {
   const usuarioSalvo = localStorage.getItem("usuario");
 
+  // Verifica se o usuário existe e não está corrompido
   if (usuarioSalvo && usuarioSalvo !== "undefined") {
     try {
       const usuario = JSON.parse(usuarioSalvo);
 
+      // 1. Muda o botão de "Login" para uma saudação
       const linkSignin = document.getElementById("linkSignin");
       linkSignin.innerText = `👤 Olá, ${usuario.nome}`;
-      linkSignin.href = "#";
+      linkSignin.href = "#"; // Desativa o link de ir para a página de login
 
+      // 2. Esconde o "Cadastre-se" e revela o "Sair"
       document.getElementById("linkSignup").style.display = "none";
       document.getElementById("btnSair").style.display = "inline-block";
 
-      // Se for o chefe, mostra o botão do painel!
+      // Mostra o painel apenas para o admin!
       if (usuario.tipo === "admin") {
         const acoesDiv = document.querySelector(".acoes-usuario");
+        // Injeta o botão HTML sem estilos inline (usando apenas a classe btn-admin)
         acoesDiv.insertAdjacentHTML(
           "afterbegin",
-          '<a href="admin.html" class="btn-admin" style="margin-right: 10px;">⚙️ Painel Admin</a>',
+          '<a href="admin.html" class="btn-admin">⚙️ Painel Admin</a>',
         );
       }
     } catch (e) {
@@ -29,6 +33,6 @@ window.onload = () => {
 
 // Função para deslogar o usuário
 function fazerLogout() {
-  localStorage.removeItem("usuario");
-  location.reload();
+  localStorage.removeItem("usuario"); // Destrói o crachá de identificação
+  location.reload(); // Dá um F5 automático para a tela voltar ao estado deslogado
 }

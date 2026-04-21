@@ -32,6 +32,7 @@ function verificarNovaCategoria() {
   const inputNova = document.getElementById("inputNovaCategoria");
 
   if (selectCategoria.value === "nova_categoria") {
+    // Usar display via JS aqui é aceitável pois é um comportamento de toggle direto
     inputNova.style.display = "block";
     inputNova.required = true;
   } else {
@@ -92,9 +93,11 @@ async function cadastrarProduto() {
     document.getElementById("idProdutoEditando").value = "";
     document.getElementById("tituloFormProduto").innerText =
       "Adicionar Novo Produto";
+
+    // Troca de classe em vez de estilo inline
     const btn = document.getElementById("btnSalvarProduto");
     btn.innerText = "Salvar no Banco de Dados";
-    btn.style.backgroundColor = "darkred";
+    btn.className = "btn-form btn-salvar";
 
     // Limpa os campos
     document.getElementById("nomeProduto").value = "";
@@ -127,13 +130,16 @@ async function carregarUsuarios() {
     const resposta = await fetch("http://localhost:3000/usuarios");
     const usuarios = await resposta.json();
 
+    //Atualiza o Card de Clientes
+    document.getElementById("cardTotalUsuarios").innerText = usuarios.length;
+
     let linhasHtml = "";
     usuarios.forEach((usuario) => {
       linhasHtml += `
         <tr>
-          <td style="padding: 8px;">${usuario.id}</td>
-          <td style="padding: 8px;">${usuario.nome}</td>
-          <td style="padding: 8px;">${usuario.email}</td>
+          <td>${usuario.id}</td>
+          <td>${usuario.nome}</td>
+          <td>${usuario.email}</td>
         </tr>
       `;
     });
@@ -150,6 +156,10 @@ async function carregarEstoque() {
     const resposta = await fetch("http://localhost:3000/produtos");
     const produtos = await resposta.json();
     listaEstoqueGlobal = produtos; // Salva a lista na memória
+    atualizarDropdownCategorias();
+
+    // ATUALIZA O DASHBOARD
+    document.getElementById("cardTotalProdutos").innerText = produtos.length;
 
     let linhasHtml = "";
     produtos.forEach((produto) => {
@@ -158,18 +168,14 @@ async function carregarEstoque() {
 
       linhasHtml += `
         <tr>
-          <td style="padding: 8px;">${produto.id}</td>
-          <td style="padding: 8px;">${produto.nome}</td>
-          <td style="padding: 8px; text-transform: capitalize;">${produto.categoria}</td>
-          <td style="padding: 8px;">R$ ${precoFormatado}</td>
-          <td style="padding: 8px;">${produto.estoque}</td>
-          <td style="padding: 8px;">
-            <button onclick="prepararEdicao(${produto.id})" style="background-color: #f39c12; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-right: 5px;">
-              ✏️ Editar
-            </button>
-            <button onclick="deletarProduto(${produto.id})" style="background-color: #ff4c4c; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
-              🗑️ Excluir
-            </button>
+          <td>${produto.id}</td>
+          <td>${produto.nome}</td>
+          <td>${produto.categoria}</td>
+          <td>R$ ${precoFormatado}</td>
+          <td>${produto.estoque}</td>
+          <td>
+            <button class="btn-acao btn-editar" onclick="prepararEdicao(${produto.id})">✏️ Editar</button>
+            <button class="btn-acao btn-excluir" onclick="deletarProduto(${produto.id})">🗑️ Excluir</button>
           </td>
         </tr>
       `;
@@ -187,6 +193,13 @@ async function carregarPedidos() {
     const resposta = await fetch("http://localhost:3000/pedidos");
     const pedidos = await resposta.json();
 
+    //Faz a matemática do Faturamento
+    let somaVendas = 0;
+    pedidos.forEach((pedido) => {
+      somaVendas += parseFloat(pedido.total);
+    });
+    document.getElementById("cardTotalVendas").innerText = `R$ ${somaVendas.toFixed(2)}`;
+
     let linhasHtml = "";
     pedidos.forEach((pedido) => {
       const totalFormatado = parseFloat(pedido.total).toFixed(2);
@@ -196,12 +209,12 @@ async function carregarPedidos() {
 
       linhasHtml += `
         <tr>
-    <td style="padding: 8px; font-weight: bold;">#${pedido.id}</td>
-    <td style="padding: 8px;">${pedido.usuario}</td> 
-    <td style="padding: 8px;">${dataFormatada}</td>
-    <td style="padding: 8px; color: green; font-weight: bold;">R$ ${totalFormatado}</td>
-  </tr>
-`;
+          <td class="destaque-id">#${pedido.id}</td>
+          <td>${pedido.usuario}</td> 
+          <td>${dataFormatada}</td>
+          <td class="destaque-valor">R$ ${totalFormatado}</td>
+        </tr>
+      `;
     });
 
     document.getElementById("tabelaPedidos").innerHTML = linhasHtml;
@@ -229,7 +242,7 @@ async function deletarProduto(id) {
 
     if (resposta.ok) {
       alert("Produto excluído com sucesso!");
-      carregarEstoque(); // Mágica: recarrega a tabela automaticamente para a linha sumir
+      carregarEstoque(); // recarrega a tabela automaticamente para a linha sumir
     } else {
       alert("Erro ao excluir o produto. Ele pode estar atrelado a um pedido.");
     }
@@ -257,10 +270,40 @@ function prepararEdicao(id) {
   // 4. Muda a "cara" da tela para modo edição
   document.getElementById("tituloFormProduto").innerText =
     "✏️ Editar Produto #" + produto.id;
+
+
   const btn = document.getElementById("btnSalvarProduto");
   btn.innerText = "Atualizar Produto";
-  btn.style.backgroundColor = "#f39c12";
+  btn.className = "btn-form btn-editar";
 
   // 5. Joga o usuário para a aba do formulário
   abrirAba("abaNovoProduto");
+}
+
+// 9. Função inteligente para atualizar a lista suspensa com dados do banco
+function atualizarDropdownCategorias() {
+  // 1. Categorias base para a loja nunca ficar vazia, mesmo se zerar o estoque
+  const categoriasBase = ["teclado", "mouse", "monitor", "placa-mae", "placa-video"];
+
+  // 2. Extrai só os nomes das categorias de todos os produtos que vieram do banco
+  const categoriasDoBanco = listaEstoqueGlobal.map((produto) => produto.categoria);
+
+  // 3. Junta as duas listas e usa o 'Set' para arrancar todas as duplicatas
+  const categoriasUnicas = [...new Set([...categoriasBase, ...categoriasDoBanco])];
+
+  // 4. Começa a montar o HTML da lista suspensa
+  let opcoesHtml = `<option value="" disabled selected>Selecione uma categoria...</option>`;
+
+  // 5. Cria uma <option> para cada categoria encontrada
+  categoriasUnicas.forEach((categoria) => {
+    // Coloca a primeira letra em maiúscula só pra ficar bonito na tela
+    const nomeFormatado = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+    opcoesHtml += `<option value="${categoria}">${nomeFormatado}</option>`;
+  });
+
+  // 6. Coloca a opção de Criar Nova fixada no final
+  opcoesHtml += `<option value="nova_categoria">➕ Criar Nova Categoria...</option>`;
+
+  // 7. Injeta o novo HTML limpo dentro do select do formulário
+  document.getElementById("categoriaProduto").innerHTML = opcoesHtml;
 }
