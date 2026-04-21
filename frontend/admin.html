@@ -2,8 +2,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Painel do Chefe - Loja de Periféricos</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Admin - Loja de Periféricos</title>
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/admin.css" />
   </head>
   <body>
     <header class="cabecalho-principal">
@@ -25,22 +27,30 @@
 
       <hr />
 
+      <div class="dashboard-cards">
+        <div class="card-resumo card-vendas">
+          <h3>💰 Faturamento</h3>
+          <p id="cardTotalVendas">R$ 0.00</p>
+        </div>
+        <div class="card-resumo card-clientes">
+          <h3>👥 Clientes</h3>
+          <p id="cardTotalUsuarios">0</p>
+        </div>
+        <div class="card-resumo card-produtos">
+          <h3>📦 Produtos</h3>
+          <p id="cardTotalProdutos">0</p>
+        </div>
+      </div>
+
       <div id="abaPedidos" class="conteudo-aba">
         <h2>Pedidos Finalizados</h2>
-        <table
-          border="1"
-          style="width: 100%; border-collapse: collapse; text-align: left"
-        >
+        <table class="tabela-admin">
           <thead>
             <tr>
-              <th style="padding: 8px; background-color: #f2f2f2">Nº Pedido</th>
-              <th style="padding: 8px; background-color: #f2f2f2">Cliente</th>
-              <th style="padding: 8px; background-color: #f2f2f2">
-                Data da Compra
-              </th>
-              <th style="padding: 8px; background-color: #f2f2f2">
-                Total (R$)
-              </th>
+              <th>Nº Pedido</th>
+              <th>Cliente</th>
+              <th>Data da Compra</th>
+              <th>Total (R$)</th>
             </tr>
           </thead>
           <tbody id="tabelaPedidos"></tbody>
@@ -49,15 +59,12 @@
 
       <div id="abaUsuarios" class="conteudo-aba" style="display: none">
         <h2>Usuários do Sistema</h2>
-        <table
-          border="1"
-          style="width: 100%; border-collapse: collapse; text-align: left"
-        >
+        <table class="tabela-admin">
           <thead>
             <tr>
-              <th style="padding: 8px; background-color: #f2f2f2">ID</th>
-              <th style="padding: 8px; background-color: #f2f2f2">Nome</th>
-              <th style="padding: 8px; background-color: #f2f2f2">E-mail</th>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>E-mail</th>
             </tr>
           </thead>
           <tbody id="tabelaUsuarios"></tbody>
@@ -66,20 +73,15 @@
 
       <div id="abaEstoque" class="conteudo-aba" style="display: none">
         <h2>Produtos no Estoque</h2>
-        <table
-          border="1"
-          style="width: 100%; border-collapse: collapse; text-align: left"
-        >
+        <table class="tabela-admin">
           <thead>
             <tr>
-              <th style="padding: 8px; background-color: #f2f2f2">ID</th>
-              <th style="padding: 8px; background-color: #f2f2f2">Nome</th>
-              <th style="padding: 8px; background-color: #f2f2f2">Categoria</th>
-              <th style="padding: 8px; background-color: #f2f2f2">
-                Preço (R$)
-              </th>
-              <th style="padding: 8px; background-color: #f2f2f2">Qtd</th>
-              <th style="padding: 8px; background-color: #f2f2f2">Ações</th>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Preço (R$)</th>
+              <th>Qtd</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody id="tabelaEstoque"></tbody>
@@ -89,15 +91,7 @@
       <div id="abaNovoProduto" class="conteudo-aba" style="display: none">
         <h2 id="tituloFormProduto">Adicionar Novo Produto</h2>
 
-        <div
-          class="formulario-admin"
-          style="
-            display: flex;
-            flex-direction: column;
-            max-width: 300px;
-            gap: 10px;
-          "
-        >
+        <div class="formulario-admin">
           <input
             type="text"
             id="nomeProduto"
@@ -147,8 +141,8 @@
 
           <button
             id="btnSalvarProduto"
+            class="btn-form btn-salvar"
             onclick="cadastrarProduto()"
-            style="background-color: darkred; color: white; padding: 10px"
           >
             Salvar no Banco de Dados
           </button>

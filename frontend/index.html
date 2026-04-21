@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home - Loja de Periféricos</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/index.css" />
   </head>
 
   <body>
@@ -14,7 +15,6 @@
 
         <nav class="menu-navegacao">
           <a href="index.html" class="link-menu">Home</a>
-
           <a href="vitrine.html?categoria=teclado" class="link-menu"
             >Teclados</a
           >
@@ -52,14 +52,17 @@
       </div>
     </header>
 
-    <hr />
+    <hr class="linha-divisoria" />
+
     <main class="container-principal">
       <section class="banner-destaque">
-        <h2 class="titulo-banner">Monte o seu Setup Gamer!</h2>
-        <p class="texto-banner">As melhores peças com os melhores preços.</p>
+        <div class="conteudo-banner">
+          <h2 class="titulo-banner">Monte o seu Setup Gamer!</h2>
+          <p class="texto-banner">As melhores peças com os melhores preços.</p>
+          <a href="vitrine.html" class="btn-banner">Ver Catálogo Completo</a>
+        </div>
       </section>
     </main>
-
     <script src="./js/index.js"></script>
   </body>
 </html>
