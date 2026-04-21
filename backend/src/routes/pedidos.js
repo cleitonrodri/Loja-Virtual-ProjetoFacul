@@ -8,8 +8,11 @@ const {
   buscarPedidoCompleto,
 } = require("../controllers/pedidosController"); // importa o controler
 
+// ROTAS (POST)
 router.post("/pedidos", criarPedido);
 router.post("/pedidos/:pedido_id/itens", adicionarItemPedido);
+
+// ROTAS (GET)
 router.get("/pedidos", listarPedidos);
 router.get("/pedidos/:id", buscarPedidoCompleto);
 
