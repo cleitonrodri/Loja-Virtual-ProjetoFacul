@@ -5,7 +5,8 @@ const criarProdutos = (req, res) => {
 
   db.query(
     "INSERT INTO produtos (nome, preco, descricao, categoria, marca, estoque) VALUES (?, ?, ?, ?, ?, ?)",
-    [nome, preco, descricao, categoria, marca, estoque || 10], // substitui os ? pelos valores
+    // substitui os ? pelos valores e O comando "|| 10" garante que se o admin esquecer de digitar o estoque, ele salva 10 por padrão
+    [nome, preco, descricao, categoria, marca, estoque || 10],
     (erro, result) => {
       if (erro) {
         console.error(erro);
@@ -29,7 +30,7 @@ const listarProdutos = (req, res) => {
 
     // Retorna os dados como JSON
     res.json(results);
-  }); // Fechamento correto do db.query
+  }); // Fechamento do db.query
 };
 
 const buscarProdutoPorId = (req, res) => {
@@ -58,12 +59,12 @@ const atualizarProduto = (req, res) => {
   const id = req.params.id;
 
   // pega os dados novos enviados
-  const { nome, preco, descricao } = req.body;
+  const { nome, preco, descricao, categoria, marca, estoque } = req.body;
 
   // atualiza no banco
   db.query(
-    "UPDATE produtos SET nome = ?, preco = ?, descricao = ? WHERE id = ?",
-    [nome, preco, descricao, id],
+    "UPDATE produtos SET nome = ?, preco = ?, descricao = ?, categoria = ?, marca = ?, estoque = ? WHERE id = ?",
+    [nome, preco, descricao, categoria, marca, estoque, id],
     (erro, results) => {
       if (erro) {
         console.error(erro);

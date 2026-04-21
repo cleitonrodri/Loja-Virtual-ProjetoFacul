@@ -18,7 +18,7 @@ const criarPedido = (req, res) => {
         .status(201)
         .json({ mensagem: "Pedido realizado!", id: results.insertId });
     },
-  ); // Fechamento correto do db.query
+  ); // Fechamento  do db.query
 };
 
 const adicionarItemPedido = (req, res) => {
@@ -94,6 +94,7 @@ const listarPedidos = (req, res) => {
 const buscarPedidoCompleto = (req, res) => {
   const pedido_id = req.params.id;
 
+  // busca o pedido
   db.query(
     `SELECT
                 pedidos.id,
@@ -113,6 +114,7 @@ const buscarPedidoCompleto = (req, res) => {
         return res.status(404).send("Pedido não encontrado");
       }
 
+      //busca os itens do pedido selecionado
       db.query(
         `SELECT
                         produtos.nome AS produto,
@@ -128,6 +130,7 @@ const buscarPedidoCompleto = (req, res) => {
             return res.status(500).send("Erro ao buscar  itens");
           }
 
+          // junta o pedido com os itens
           const pedido = {
             ...pedidoResult[0],
             itens: itensResult,

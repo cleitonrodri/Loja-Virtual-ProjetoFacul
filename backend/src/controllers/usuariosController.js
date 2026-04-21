@@ -59,6 +59,9 @@ const atualizarUsuario = (req, res) => {
         console.error(erro);
         return res.status(500).send("Erro ao atualizar usuario");
       }
+      if (results.affectedRows === 0)
+        return res.status(404).send("Usuario não encontrado");
+
       res.send("Usuario atualizado com sucesso");
     },
   );
@@ -67,11 +70,14 @@ const atualizarUsuario = (req, res) => {
 const deletarUsuario = (req, res) => {
   const id = req.params.id;
 
-  db.query("DELETE FROM usuarios WHERE id = ?", [id], (erro, result) => {
+  db.query("DELETE FROM usuarios WHERE id = ?", [id], (erro, results) => {
     if (erro) {
       console.error(erro);
       return res.status(500).send("Erro ao deletar usuario");
     }
+    if (results.affectedRows === 0)
+      return res.status(404).send("Usuario não encontrado");
+
     res.send("Usuario deletado com sucesso");
   });
 };
@@ -83,12 +89,18 @@ const login = (req, res) => {
     "SELECT * FROM usuarios WHERE email = ? AND senha = ?",
     [email, senha],
     (erro, results) => {
+      // Trata erro de conexão com o banco
+      if (erro)
+        return res.status(500).send("Erro no servidor ao processar login");
+
+      // Regra de Negócio: E-mail ou senha incorretos
       if (results.length === 0) {
         return res.status(401).send("Usuário ou senha inválidos");
       }
 
       const usuario = results[0];
 
+      // Devolve apenas os dados necessários para o painel funcionar (omite a senha)
       res.json({
         id: usuario.id,
         nome: usuario.nome,
