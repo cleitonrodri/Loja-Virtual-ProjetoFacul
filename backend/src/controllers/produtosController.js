@@ -1,12 +1,12 @@
 const db = require("../db");
 
 const criarProdutos = (req, res) => {
-  const { nome, preco, descricao, categoria, marca, estoque } = req.body;
+  const { nome, preco, descricao, categoria, marca, estoque, imagem } = req.body;
 
   db.query(
-    "INSERT INTO produtos (nome, preco, descricao, categoria, marca, estoque) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO produtos (nome, preco, descricao, categoria, marca, estoque, imagem) VALUES (?, ?, ?, ?, ?, ?, ?)",
     // substitui os ? pelos valores e O comando "|| 10" garante que se o admin esquecer de digitar o estoque, ele salva 10 por padrão
-    [nome, preco, descricao, categoria, marca, estoque || 10],
+    [nome, preco, descricao, categoria, marca, estoque || 10, imagem],
     (erro, result) => {
       if (erro) {
         console.error(erro);
@@ -59,12 +59,12 @@ const atualizarProduto = (req, res) => {
   const id = req.params.id;
 
   // pega os dados novos enviados
-  const { nome, preco, descricao, categoria, marca, estoque } = req.body;
+  const { nome, preco, descricao, categoria, marca, estoque, imagem  } = req.body;
 
   // atualiza no banco
   db.query(
-    "UPDATE produtos SET nome = ?, preco = ?, descricao = ?, categoria = ?, marca = ?, estoque = ? WHERE id = ?",
-    [nome, preco, descricao, categoria, marca, estoque, id],
+    "UPDATE produtos SET nome = ?, preco = ?, descricao = ?, categoria = ?, marca = ?, estoque = ?, imagem = ? WHERE id = ?",
+    [nome, preco, descricao, categoria, marca, estoque, imagem, id],
     (erro, results) => {
       if (erro) {
         console.error(erro);

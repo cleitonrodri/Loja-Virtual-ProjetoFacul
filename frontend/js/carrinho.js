@@ -6,13 +6,20 @@ window.onload = () => {
 function renderizarCarrinho() {
   const carrinhoSalvo = localStorage.getItem("carrinho");
   const carrinhoDeCompras = carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
-  const divLista = document.getElementById("listaCarrinho");
+  
+  // Agora aponta para o <tbody> da nossa tabela
+  const tbodyLista = document.getElementById("listaCarrinho");
   const elementoTotal = document.getElementById("valorTotal");
 
-  // Se o carrinho estiver vazio
+  // Se o carrinho estiver vazio, desenhamos uma linha ocupando todas as 3 colunas
   if (carrinhoDeCompras.length === 0) {
-    divLista.innerHTML =
-      "<p class='msg-vazio'>Sua mochila está vazia! Vá até a vitrine e escolha seus hardwares.</p>";
+    tbodyLista.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align: center; padding: 30px; color: var(--texto-mutado);">
+          Sua mochila está vazia! Vá até a vitrine e escolha seus hardwares.
+        </td>
+      </tr>
+    `;
     elementoTotal.innerText = "Total: R$ 0.00";
     return;
   }
@@ -23,22 +30,29 @@ function renderizarCarrinho() {
   // Passa por cada produto na mochila
   carrinhoDeCompras.forEach((produto, index) => {
     htmlItens += `
-            <div class="item-carrinho">
-                <div class="info-item">
-                    <h4>${produto.nome}</h4>
-                    <p class="preco-item">R$ ${produto.preco}</p>
-                </div>
-                <button class="btn-remover" onclick="removerDoCarrinho(${index})">
-                  🗑️ Remover
-                </button>
-            </div>
+      <tr>
+        <td>
+          <div class="item-info">
+            <img src="${produto.imagem || 'https://via.placeholder.com/60/0F172A/06B6D4?text=TechStore'}" alt="${produto.nome}">
+            <span>${produto.nome}</span>
+          </div>
+        </td>
+        <td style="font-weight: bold; color: var(--cor-primaria);">
+          R$ ${parseFloat(produto.preco).toFixed(2)}
+        </td>
+        <td>
+          <button class="btn-remover" onclick="removerDoCarrinho(${index})">
+            X Remover
+          </button>
+        </td>
+      </tr>
     `;
     // Transforma o texto do preço em número decimal e soma
     somaTotal += parseFloat(produto.preco);
   });
 
-  // Atualiza a tela com o HTML e o valor total formatado
-  divLista.innerHTML = htmlItens;
+  // Atualiza a tela com as linhas da tabela e o valor total formatado
+  tbodyLista.innerHTML = htmlItens;
   elementoTotal.innerText = `Total: R$ ${somaTotal.toFixed(2)}`;
 }
 
@@ -62,13 +76,13 @@ async function finalizarCompra() {
   const carrinhoSalvo = localStorage.getItem("carrinho");
   const carrinhoDeCompras = carrinhoSalvo ? JSON.parse(carrinhoSalvo) : [];
 
-  // Segurança 1: Carrinho vazio
+  // primeira verificacao Carrinho vazio
   if (carrinhoDeCompras.length === 0) {
     alert("Coloque produtos no carrinho antes de tentar pagar!");
     return;
   }
 
-  // Segurança 2: Usuário não logado
+  // segunda verificacaoUsuário não logado
   if (!usuarioSalvo || usuarioSalvo === "undefined") {
     alert("Você precisa entrar na sua conta para finalizar a compra.");
     window.location.replace("signin.html");

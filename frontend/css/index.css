@@ -1,0 +1,20 @@
+.hero-banner {
+  background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.1), transparent), var(--fundo-card);
+  padding: 60px 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 30px auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hero-banner h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.hero-banner p {
+  color: var(--texto-mutado);
+  font-size: 18px;
+  margin-bottom: 25px;
+}

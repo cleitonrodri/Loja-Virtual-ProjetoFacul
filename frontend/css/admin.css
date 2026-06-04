@@ -1,0 +1,204 @@
+/* PAINEL ADMIN - TECHSTORE */
+/* 1. MENU DE ABAS (Botões Superiores) */
+.menu-abas {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Não quebra no celular */
+}
+
+.menu-abas button {
+  background-color: var(--fundo-card);
+  color: var(--texto-claro);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.menu-abas button:hover {
+  background-color: var(--cor-primaria);
+  color: #0F172A;
+  border-color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+
+/* 2. CARDS DE RESUMO (Faturamento, etc) */
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.card-resumo {
+  flex: 1;
+  background-color: var(--fundo-card);
+  padding: 22px;
+  border-radius: 10px;
+  border-left: 4px solid var(--cor-primaria);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* O efeito quando passar o mouse nos cards */
+.card-resumo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.25);
+  border-left-color: #22D3EE; /* Ciano um pouco mais brilhante */
+}
+
+.card-resumo h3 {
+  color: var(--texto-mutado);
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-resumo p {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--texto-claro);
+}
+
+@media (max-width: 768px) {
+  .dashboard-cards {
+    flex-direction: column;
+  }
+}
+
+
+/* 3. TABELAS (Estoque, Usuários, Pedidos) */
+.conteudo-aba h2 {
+  margin-bottom: 20px;
+  color: var(--cor-primaria);
+}
+
+.tabela-admin {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--fundo-card);
+  border-radius: 10px;
+  overflow: hidden; /* Garante que a borda arredondada pegue no cabeçalho */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 40px;
+}
+
+.tabela-admin thead {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tabela-admin th, 
+.tabela-admin td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tabela-admin th {
+  color: var(--texto-mutado);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabela-admin tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.tabela-admin tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03); /* Destaque leve na linha */
+}
+
+/* Estilo para os botões gerados pelo JS dentro da tabela (Editar/Excluir) */
+.tabela-admin td button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--texto-claro);
+  transition: all 0.2s ease;
+}
+
+.tabela-admin td button:hover {
+  background-color: var(--cor-primaria);
+  color: #0F172A;
+}
+
+
+/* 4. FORMULÁRIO DE CADASTRO (A Caixa de Vidro) */
+#tituloFormProduto {
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza o título da caixa */
+}
+
+.formulario-admin {
+  background: rgba(30, 41, 59, 0.6); /* Um pouco mais escuro para ler melhor */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 12px;
+  padding: 35px;
+  max-width: 550px;
+  margin: 30px auto; /* O 'auto' joga o formulário pro centro da tela! */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.formulario-admin input:not([type="hidden"]), 
+.formulario-admin select {
+  display: block;
+  width: 100%;
+  padding: 14px 15px; /* Aumentei levemente o respiro do input */
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #0F172A;
+  color: var(--texto-claro);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-admin input:focus, 
+.formulario-admin select:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15); /* Brilho sutil ao digitar */
+}
+
+.formulario-admin label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--texto-mutado);
+  font-weight: 500;
+}
+
+.formulario-admin .btn-form {
+  display: block;
+  width: 100%;
+  background-color: var(--cor-primaria);
+  color: #0F172A;
+  padding: 15px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.formulario-admin .btn-form:hover {
+  background-color: #22D3EE;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}

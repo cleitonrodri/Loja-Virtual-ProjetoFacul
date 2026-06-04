@@ -93,14 +93,14 @@ const login = (req, res) => {
       if (erro)
         return res.status(500).send("Erro no servidor ao processar login");
 
-      // Regra de Negócio: E-mail ou senha incorretos
+      // E-mail ou senha incorretos
       if (results.length === 0) {
         return res.status(401).send("Usuário ou senha inválidos");
       }
 
       const usuario = results[0];
 
-      // Devolve apenas os dados necessários para o painel funcionar (omite a senha)
+      // Devolve apenas os dados necessários para o painel funcionar (esconde a senha)
       res.json({
         id: usuario.id,
         nome: usuario.nome,

@@ -1,4 +1,4 @@
-// O "Ouvinte" que roda quando a página abre
+// Roda quando a página abre
 window.onload = () => {
   const usuarioSalvo = localStorage.getItem("usuario");
 

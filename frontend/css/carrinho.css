@@ -1,0 +1,103 @@
+/* CARRINHO - TECHSTORE */
+
+.carrinho-container {
+  margin: 40px auto 80px auto;
+}
+
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin-bottom: 30px;
+  border-left: 4px solid var(--cor-primaria);
+  padding-left: 15px;
+}
+
+.tabela-carrinho-wrapper {
+  overflow-x: auto;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  background-color: var(--fundo-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tabela-carrinho {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-carrinho th, 
+.tabela-carrinho td {
+  padding: 18px 25px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tabela-carrinho th {
+  color: var(--texto-mutado);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--texto-claro);
+  font-weight: 600;
+}
+
+/* Quadrado escuro da imagem com a foto preenchendo */
+.item-info img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover; 
+  background-color: rgba(15, 23, 42, 0.6);
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.resumo-carrinho {
+  background-color: var(--fundo-card);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: right;
+  max-width: 400px;
+  margin-left: auto;
+  border-right: 4px solid var(--cor-primaria);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.resumo-carrinho h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin-bottom: 20px;
+}
+
+.resumo-carrinho .btn-primario {
+  width: 100%;
+  font-size: 16px;
+  padding: 14px;
+}
+
+/* Estilo do botão de Remover Item */
+.btn-remover {
+  background-color: transparent;
+  color: #EF233C;
+  border: 1px solid #EF233C;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-remover:hover {
+  background-color: #EF233C;
+  color: #fff;
+}

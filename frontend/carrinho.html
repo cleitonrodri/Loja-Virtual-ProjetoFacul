@@ -3,34 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Carrinho - Loja de Periféricos</title>
+    <title>TechStore - Meu Carrinho</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/global.css" />
     <link rel="stylesheet" href="./css/carrinho.css" />
   </head>
   <body>
-    <header class="cabecalho-principal">
-      <h1 class="logo-loja">Loja de Periféricos</h1>
-      <nav class="menu-navegacao">
-        <a href="index.html" class="link-menu">Home</a>
-        <a href="vitrine.html?categoria=teclado" class="link-menu">Teclados</a>
-        <a href="vitrine.html?categoria=mouse" class="link-menu">Mouses</a>
-        <a href="vitrine.html?categoria=placa-mae" class="link-menu"
-          >Placas-Mãe</a
-        >
-      </nav>
+    <header>
+      <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="index.html" class="logo-loja">Tech<span>Store</span></a>
+        <nav class="menu-navegacao">
+          <a href="index.html">Home</a>
+          <a href="vitrine.html?categoria=teclado">Teclados</a>
+          <a href="vitrine.html?categoria=mouse">Mouses</a>
+          <a href="vitrine.html?categoria=placa-mae">Placas-Mãe</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="container-principal">
-      <h2>🛒 Seu Carrinho de Compras</h2>
+    <main class="container carrinho-container">
+      <h2 class="titulo-pagina">🛒 Seu Carrinho de Compras</h2>
 
-      <div id="listaCarrinho" class="lista-produtos-carrinho"></div>
+      <div class="tabela-carrinho-wrapper">
+        <table class="tabela-carrinho">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          
+          <tbody id="listaCarrinho">
+            </tbody>
+        </table>
+      </div>
 
-      <hr class="separador-carrinho" />
-
-      <h3 id="valorTotal" class="total-carrinho">Total: R$ 0.00</h3>
-
-      <div class="box-finalizar">
-        <button class="btn-finalizar" onclick="finalizarCompra()">
+      <div class="resumo-carrinho">
+        <h3 id="valorTotal">Total: R$ 0.00</h3>
+        <button class="btn-primario" onclick="finalizarCompra()">
           💳 Finalizar Compra
         </button>
       </div>

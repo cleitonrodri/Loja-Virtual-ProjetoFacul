@@ -1,0 +1,89 @@
+/* VITRINE - CATÁLOGO DE PRODUTOS */
+
+/* Estilo do título "Todos os Produtos" ou da Categoria pesquisada */
+.titulo-pagina {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin: 40px 0 10px 0;
+  border-left: 4px solid var(--cor-primaria);
+  padding-left: 15px;
+}
+
+.grid-produtos {
+  display: grid;
+  /* Cria colunas responsivas automáticas de no mínimo 260px */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  margin: 30px 0 60px 0;
+}
+
+.card-produto {
+  background-color: var(--fundo-card);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Efeito Gamer de levitar o card e acender a borda */
+.card-produto:hover {
+  transform: translateY(-6px);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Container da foto para manter proporção e ter um fundo escuro elegante */
+.card-container-foto {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(15, 23, 42, 0.6);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+/* Evita que qualquer link de imagem distorça o layout */
+.card-produto img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.titulo-produto {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--texto-claro);
+  margin-bottom: 8px;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.marca-produto {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--cor-primaria);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.preco-produto {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.card-produto .btn-primario {
+  width: 100%;
+}

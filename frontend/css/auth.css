@@ -1,0 +1,124 @@
+/* TELAS DE AUTENTICAÇÃO (Login / Cadastro) */
+/* Centraliza a caixa perfeitamente no meio da tela */
+.tela-centralizada {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa 100% da altura da tela */
+  padding: 20px;
+}
+
+/* A Caixa Principal (Efeito de Vidro) */
+.box-autenticacao {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 16px;
+  padding: 40px 35px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo no topo da caixa */
+.logo-loja-auth {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--texto-claro);
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+/* Deixa a segunda palavra da logo na cor Ciano */
+.logo-loja-auth span {
+  color: var(--cor-primaria);
+}
+
+/* Título do Form (Acesse sua conta / Criar) */
+.formulario-auth h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+  color: var(--texto-claro);
+}
+
+/* Sobrescreve aquele estilo inline (style="color: #666") do HTML de cadastro */
+.formulario-auth p[style] {
+  color: var(--texto-mutado) !important;
+  text-align: center;
+}
+
+/* Grupos de Input (E-mail, Senha, etc) */
+.grupo-input {
+  margin-bottom: 20px;
+}
+
+.grupo-input label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--texto-mutado);
+}
+
+.grupo-input input {
+  width: 100%;
+  padding: 14px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #0F172A;
+  color: var(--texto-claro);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Brilho neon ao clicar no input */
+.grupo-input input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+}
+
+/* Botão de Entrar/Cadastrar */
+.btn-principal {
+  display: block;
+  width: 100%;
+  background-color: var(--cor-primaria);
+  color: #0F172A; /* Texto escuro para contraste */
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-principal:hover {
+  background-color: #22D3EE;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+/* Rodapé (Não tem conta? / Já tem conta?) */
+.texto-rodape {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: var(--texto-mutado);
+}
+
+.texto-rodape a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.texto-rodape a:hover {
+  color: #22D3EE;
+  text-decoration: underline;
+}

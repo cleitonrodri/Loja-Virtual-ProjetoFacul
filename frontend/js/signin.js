@@ -1,4 +1,4 @@
-// O "Ouvinte" fica esperando o formulário ser enviado (submit)
+// Fica esperando o formulário ser enviado (submit)
 document
   .getElementById("formSignin")
   .addEventListener("submit", async function (event) {

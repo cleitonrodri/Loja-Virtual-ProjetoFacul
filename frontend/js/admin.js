@@ -1,7 +1,7 @@
 let usuarioLogado = null;
 let listaEstoqueGlobal = [];
 
-// 1. Segurança ver se o usuario ta logado e inicialização das abas
+// 1. Verifica se o usuario ta logado e inicialização das abas
 window.onload = () => {
   const usuarioSalvo = localStorage.getItem("usuario");
 
@@ -32,7 +32,6 @@ function verificarNovaCategoria() {
   const inputNova = document.getElementById("inputNovaCategoria");
 
   if (selectCategoria.value === "nova_categoria") {
-    // Usar display via JS aqui é aceitável pois é um comportamento de toggle direto
     inputNova.style.display = "block";
     inputNova.required = true;
   } else {
@@ -42,11 +41,13 @@ function verificarNovaCategoria() {
   }
 }
 
-// 3. FUNÇÃO DE CADASTRAR NO BANCO
 async function cadastrarProduto() {
   const nome = document.getElementById("nomeProduto").value;
   const preco = document.getElementById("precoProduto").value;
   const descricao = document.getElementById("descProduto").value;
+  
+  // 1. CAPTURA O LINK DA IMAGEM DO NOVO INPUT
+  const imagem = document.getElementById("imagemProduto").value;
 
   let categoriaFinal = document.getElementById("categoriaProduto").value;
 
@@ -79,13 +80,14 @@ async function cadastrarProduto() {
       marca: document.getElementById("marcaProduto").value,
       estoque: document.getElementById("estoqueProduto").value,
       tipo: usuarioLogado.tipo,
+      imagem: imagem, // 2. ENVIA O LINK DA IMAGEM PARA O BACKEND
     }),
   });
 
   if (resposta.ok) {
     alert(
       idEditando
-        ? "Produto atualizado com sucesso!"
+        ? "Produto updated com sucesso!"
         : "Produto cadastrado com sucesso!",
     );
 
@@ -94,7 +96,7 @@ async function cadastrarProduto() {
     document.getElementById("tituloFormProduto").innerText =
       "Adicionar Novo Produto";
 
-    // Troca de classe em vez de estilo inline
+    // Troca de classe em vez de estilo
     const btn = document.getElementById("btnSalvarProduto");
     btn.innerText = "Salvar no Banco de Dados";
     btn.className = "btn-form btn-salvar";
@@ -104,6 +106,7 @@ async function cadastrarProduto() {
     document.getElementById("precoProduto").value = "";
     document.getElementById("descProduto").value = "";
     document.getElementById("categoriaProduto").value = "";
+    document.getElementById("imagemProduto").value = ""; // 3. LIMPA O CAMPO DO LINK
 
     // Volta pra aba de estoque para ver a mudança
     carregarEstoque();

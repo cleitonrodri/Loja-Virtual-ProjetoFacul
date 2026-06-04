@@ -3,47 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Loja de Periféricos</title>
+    <title>TechStore - Home</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="./css/global.css" />
     <link rel="stylesheet" href="./css/index.css" />
   </head>
 
   <body>
-    <header class="cabecalho-principal">
-      <div class="container-cabecalho">
-        <h1 class="logo-loja">Loja de Periféricos</h1>
+    <header>
+      <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        
+        <a href="index.html" class="logo-loja">Tech<span>Store</span></a>
 
         <nav class="menu-navegacao">
-          <a href="index.html" class="link-menu">Home</a>
-          <a href="vitrine.html?categoria=teclado" class="link-menu"
-            >Teclados</a
-          >
-          <a href="vitrine.html?categoria=mouse" class="link-menu">Mouses</a>
-          <a href="vitrine.html?categoria=monitor" class="link-menu"
-            >Monitores</a
-          >
-          <a href="vitrine.html?categoria=headset" class="link-menu"
-            >Headsets</a
-          >
-          <a href="vitrine.html?categoria=placa-mae" class="link-menu"
-            >Placas-Mãe</a
-          >
-          <a href="vitrine.html?categoria=placa-video" class="link-menu"
-            >Placas de Vídeo</a
-          >
+          <a href="index.html">Home</a>
+          <a href="vitrine.html?categoria=teclado">Teclados</a>
+          <a href="vitrine.html?categoria=mouse">Mouses</a>
+          <a href="vitrine.html?categoria=monitor">Monitores</a>
+          <a href="vitrine.html?categoria=headset">Headsets</a>
+          <a href="vitrine.html?categoria=placa-mae">Placas-Mãe</a>
+          <a href="vitrine.html?categoria=placa-video">Placas de Vídeo</a>
         </nav>
 
-        <div class="acoes-usuario">
-          <a href="carrinho.html" class="btn-carrinho">🛒 Carrinho</a>
-          <a href="signin.html" id="linkSignin" class="btn-signin">🔐 Entrar</a>
-          <a href="signup.html" id="linkSignup" class="btn-signup"
-            >🔐 Cadastrar</a
-          >
+        <div class="menu-navegacao acoes-usuario" style="display: flex; align-items: center;">
+          <a href="carrinho.html">🛒 Carrinho</a>
+          <a href="signin.html" id="linkSignin">🔐 Entrar</a>
+          <a href="signup.html" id="linkSignup">📋 Cadastrar</a>
 
-          <button
-            id="btnSair"
-            class="btn-sair"
-            style="display: none"
+          <button 
+            id="btnSair" 
+            class="btn-primario" 
+            style="display: none; padding: 8px 15px; margin-left: 15px;" 
             onclick="fazerLogout()"
           >
             Sair
@@ -52,17 +44,14 @@
       </div>
     </header>
 
-    <hr class="linha-divisoria" />
-
-    <main class="container-principal">
-      <section class="banner-destaque">
-        <div class="conteudo-banner">
-          <h2 class="titulo-banner">Monte o seu Setup Gamer!</h2>
-          <p class="texto-banner">As melhores peças com os melhores preços.</p>
-          <a href="vitrine.html" class="btn-banner">Ver Catálogo Completo</a>
-        </div>
+    <main class="container">
+      <section class="hero-banner">
+        <h1>Monte o seu Setup Gamer!</h1>
+        <p>As melhores peças com os melhores preços.</p>
+        <a href="vitrine.html" class="btn-primario" style="text-decoration: none; display: inline-block;">Ver Catálogo Completo</a>
       </section>
     </main>
+
     <script src="./js/index.js"></script>
   </body>
 </html>
