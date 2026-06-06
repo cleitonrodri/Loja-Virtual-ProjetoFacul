@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # 1. Nosso Banco de Dados MySQL
+  db:
+    image: mysql:8.0
+    container_name: techstore-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: techstore
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # 2. Nosso Servidor Node.js
+  backend:
+    build: ./backend
+    container_name: techstore-node
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db 
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: techstore
+    depends_on:
+      - db
+
+  # 3. Nosso Servidor Web para o Front-end
+  frontend:
+    image: nginx:alpine
+    container_name: techstore-nginx
+    restart: always
+    ports:
+      - "8080:80" # O front vai rodar na porta 8080
+    volumes:
+      # Pega a pasta frontend e joga pra dentro do Nginx
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - backend
