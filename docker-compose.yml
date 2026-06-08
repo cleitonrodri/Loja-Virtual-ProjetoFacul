@@ -13,6 +13,12 @@ services:
       - "3307:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    # O Docker fica testando se o banco já acordou
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
   # 2. Nosso Servidor Node.js
   backend:
@@ -27,7 +33,8 @@ services:
       DB_PASSWORD: root
       DB_NAME: techstore
     depends_on:
-      - db
+      db:
+        condition: service_healthy # O Node só liga quando o banco der "Sinal Verde"
 
   # 3. Nosso Servidor Web para o Front-end
   frontend:
